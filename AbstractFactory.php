@@ -43,14 +43,14 @@ class AbstractFactory {
 	 * @static
 	 * @var     array
 	 */
-	private static $factories = array();
+	public static $factories = array();
 
 	/**
 	 * @access  private
 	 * @static
 	 * @var     string
 	 */
-	private static $namespace;
+	public static $namespace;
 
 	/**
 	 * Loads factory.
@@ -69,27 +69,26 @@ class AbstractFactory {
 			throw new LogicException("There is no factory called '".$factory."'.");
 		}
 		$factory = (!self::$namespace) ? $factory : self::$namespace."\\".$factory;
-		array_shift($parameters);
 		$reflect = new ReflectionClass($factory);
 		if (!$reflect->hasMethod("__construct")) {
 			throw new LogicException($factory." must have a constructor.");
 		}
 		$method = $reflect->getMethod("__construct");
 		$i = 0;
+		$parameters = $parameters[0];
 		$_parameters = array();
 		foreach ($method->getParameters() as $parameter) {
 			if (isset($parameters[$i])) {
-				$_parameters[] = $parameters[$i];
 				continue;
-			}
-			if (!$parameter->isOptional()) {
-					throw new InvalidArgumentException("$".$parameter->getName()." is a required parameter in method '".$method->getName()."'.");
 			} else {
-				$_parameters[] = $parameter->getDefaultValue();
+				if (!$parameter->isOptional()) {
+					throw new InvalidArgumentException("$".$parameter->getName()." is a required parameter in method '".$method->getName()."'.");
+				}
+				$parameters[$i] = $parameter->getDefaultValue();
 			}
 			$i++;
 		}
-		return $reflect->newInstanceArgs($_parameters);
+		return $reflect->newInstanceArgs($parameters);
 	}
 	
 	/**
@@ -108,18 +107,9 @@ class AbstractFactory {
 		if (count($factories) == 1) {
 			$factories = (is_array($factories[0])) ? $factories[0] : array($factories);
 		}
-		self::$factories = $factories;
-	}
-
-	/**
-	 * Set namespace of factories.
-	 * @access  public
-	 * @static
-	 * @param   string $namespace
-	 * @return  void
-	 */
-	public static function addNamespace($namespace) {
-		self::$namespace = $namespace;
+		foreach ($factories as $factory) {
+			self::$factories[] = ucfirst($factory);
+		}
 	}
 
 	/**
@@ -140,6 +130,17 @@ class AbstractFactory {
 	 */
 	public static function getNamespace() {
 		return self::$namespace;
+	}
+
+	/**
+	 * Set namespace of factories.
+	 * @access  public
+	 * @static
+	 * @param   string $namespace
+	 * @return  void
+	 */
+	public static function setNamespace($namespace) {
+		self::$namespace = $namespace;
 	}
 }
 ?>
