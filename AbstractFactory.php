@@ -63,6 +63,22 @@ class AbstractFactory {
 	 * @param   mixed [mixed $param [, mixed $param [, mixed $... ]]]
 	 * @return  object
 	 */
+
+	public function __call($factory, $parameters) {
+		return $this->__callStatic($factory, $parameters);
+	}
+
+	/**
+	 * Loads factory.
+	 *
+	 * \Utilities\AbstractFactory::factory(mixed $param [, mixed $param [, mixed $... ]]);
+	 *
+	 * @access  public
+	 * @static
+	 * @param   string $class
+	 * @param   mixed [mixed $param [, mixed $param [, mixed $... ]]]
+	 * @return  object
+	 */
 	public static function __callStatic($factory, $parameters) {
 		$factory = ucfirst($factory);
 		if (!in_array($factory, self::$factories)) {
