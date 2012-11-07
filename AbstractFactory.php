@@ -108,7 +108,6 @@ class AbstractFactory {
 		if (count($factories) == 1) {
 			$factories = (is_array($factories[0])) ? $factories[0] : array($factories);
 		}
-		print_r($factories);
 		self::$factories = $factories;
 	}
 
