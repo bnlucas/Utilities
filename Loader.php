@@ -39,7 +39,6 @@ namespace Utilities;
 class Loader {
 
 	/**
-	 * List of loaded class files.
 	 * @access public
 	 * @static
 	 * @var array
@@ -48,6 +47,7 @@ class Loader {
 
 	/**
 	 * Format filenames for classes to load. Logs filename in Loader::$files array.
+	 *
 	 * @access public
 	 * @static
 	 * @return void
@@ -74,7 +74,8 @@ class Loader {
 	}
 
 	/**
-	 * Sets SPL autoloader.
+	 * Clears and sets SPL autoloader.
+	 *
 	 * @access public
 	 * @static
 	 * @return void
@@ -86,6 +87,7 @@ class Loader {
 
 	/**
 	 * Return log of loaded files.
+	 *
 	 * @access public
 	 * @static
 	 * @return array

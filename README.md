@@ -1,12 +1,21 @@
 #AbstractFactory
 ```php
-
-// Global class loader.
-require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
-\Utilities\Loader::register();
-
-\Utilities\AbstractFactory::addFactories("Car", "Truck", "Motorcycle");
-\Utilities\AbstractFactory::addNamespace("\\Vehicle\\Type");
+/**
+ * namespace Vehicle;
+ * use Utilities\AbstractFactory;
+ *
+ * class CarFactory extends \Utilities\AbstractFactory {
+ *	
+ * 		public static function __callStatic($factory, $parameters) {
+ *			return parent::$factory($parameters);
+ *		}
+ *
+ *		public static function register() {
+ *			parent::setNamespace("\Vehicle\Type");
+ *			parent::addFactories("Car", "Truck", "Motorcycle");
+ *		}
+ * }
+ */
 
 /**
  * namespace Vehicle\Type;
@@ -21,10 +30,13 @@ require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
  * }
  */
 
-$car = \Utilities\AbstractFactory::car("Ford", "Mustang", "red");
-/** $car is instance of \Vehicle\Type\Car **/
+require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
+\Utilities\Loader::register();
 
-echo $car->getColor(); // red
+$car = \Vehicle\Factory::car("Ford", "Mustang", "red");
+# $car is instance of \Vehicle\Type\Car
+
+echo $car->getColor(); // red [Method in \Vehicle\Motorized]
 ```
 
 ------------------------------------------------------------------------
@@ -39,3 +51,52 @@ foreach (\Utilities\Loader::log() as $filename) {
 	echo $filename."\n";
 }
 ```
+
+------------------------------------------------------------------------
+
+#Juggernaut
+```php
+require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
+\Utilities\Loader::register();
+
+$jugger = new Juggernaut();
+# Default iterations set to 100,000.
+
+function test_for_loop() {
+	for ($i = 0; $i < 1000; $i++) {
+		// Do nothing.
+	}
+}
+
+#key := e63ded35237df6104212beb110810766 
+#    [ test := iterate          callback := test_for_loop    time := 4995.49ms ] @   100000 iterations
+#
+#/**
+# *   5. function test_for_loop() {
+# *   6. 	for ($i = 0; $i < 1000; $i++) {
+# *   7. 		// Do nothing.
+# *   8. 	}
+# *   9. }
+# */
+
+echo "<pre>".PHP_EOL;
+echo $jugger->log();
+echo "</pre>".PHP_EOL;
+
+# Or raw array...
+print_t($jugger->log(true));
+
+#Array
+#(
+#    [e63ded35237df6104212beb110810766] => Array
+#        (
+#            [name] => test_for_loop
+#            [test] => iterate
+#            [time] => 4.9954919815063
+#            [trys] => 100000
+#        )
+#
+#)
+```
+
+------------------------------------------------------------------------
