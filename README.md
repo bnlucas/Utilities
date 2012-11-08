@@ -70,6 +70,8 @@ function test_for_loop() {
 	}
 }
 
+$jugger->iterate("test_for_loop");
+
 # key := e63ded35237df6104212beb110810766 
 #     [ test := iterate          callback := test_for_loop    time := 4995.49ms ] @   100000 iterations
 # 
