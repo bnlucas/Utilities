@@ -33,6 +33,8 @@
 require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
 \Utilities\Loader::register();
 
+\Vehicle\Factory::register();
+
 $car = \Vehicle\Factory::car("Ford", "Mustang", "red");
 # $car is instance of \Vehicle\Type\Car
 
