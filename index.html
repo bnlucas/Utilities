@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Utilities : PHP utility packages." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Utilities</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/bnlucas/Utilities">View on GitHub</a>
+
+          <h1 id="project_title">Utilities</h1>
+          <h2 id="project_tagline">PHP utility packages.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/bnlucas/Utilities/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/bnlucas/Utilities/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>AbstractFactory</h1>
+
+<div class="highlight"><pre><span class="sd">/**</span>
+<span class="sd"> * namespace Vehicle;</span>
+<span class="sd"> * use Utilities\AbstractFactory;</span>
+<span class="sd"> *</span>
+<span class="sd"> * class Factory extends \Utilities\AbstractFactory {</span>
+<span class="sd"> *  </span>
+<span class="sd"> *      public static function __callStatic($factory, $parameters) {</span>
+<span class="sd"> *          return parent::$factory($parameters);</span>
+<span class="sd"> *      }</span>
+<span class="sd"> *</span>
+<span class="sd"> *      public static function register() {</span>
+<span class="sd"> *          parent::setNamespace("\Vehicle\Type");</span>
+<span class="sd"> *          parent::addFactories("Car", "Truck", "Motorcycle");</span>
+<span class="sd"> *      }</span>
+<span class="sd"> * }</span>
+<span class="sd"> */</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * namespace Vehicle\Type;</span>
+<span class="sd"> * </span>
+<span class="sd"> * class Car extends \Vehicle\Motorized {</span>
+<span class="sd"> *</span>
+<span class="sd"> *     public function __construct($make, $model, $color) {</span>
+<span class="sd"> *         $this-&gt;setMake($make);</span>
+<span class="sd"> *         $this-&gt;setModel($model);</span>
+<span class="sd"> *         $this-&gt;setColor($color);</span>
+<span class="sd"> *     }</span>
+<span class="sd"> * }</span>
+<span class="sd"> */</span>
+
+<span class="k">require_once</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'DOCUMENT_ROOT'</span><span class="p">]</span><span class="o">.</span><span class="s2">"/path/to/Utilities/Loader.php"</span><span class="p">);</span>
+<span class="nx">\Utilities\Loader</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+
+<span class="nx">\Vehicle\Factory</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+
+<span class="nv">$car</span> <span class="o">=</span> <span class="nx">\Vehicle\Factory</span><span class="o">::</span><span class="na">car</span><span class="p">(</span><span class="s2">"Ford"</span><span class="p">,</span> <span class="s2">"Mustang"</span><span class="p">,</span> <span class="s2">"red"</span><span class="p">);</span>
+<span class="c1"># $car is instance of \Vehicle\Type\Car</span>
+
+<span class="k">echo</span> <span class="nv">$car</span><span class="o">-&gt;</span><span class="na">getColor</span><span class="p">();</span> <span class="c1">// red [Method in \Vehicle\Motorized]</span>
+</pre></div>
+
+<hr><h1>Loader</h1>
+
+<div class="highlight"><pre><span class="k">require_once</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'DOCUMENT_ROOT'</span><span class="p">]</span><span class="o">.</span><span class="s2">"/path/to/Utilities/Loader.php"</span><span class="p">);</span>
+<span class="nx">\Utilities\Loader</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+
+<span class="c1"># Get list of all loaded class files.</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nx">\Utilities\Loader</span><span class="o">::</span><span class="na">log</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$filename</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">echo</span> <span class="nv">$filename</span><span class="o">.</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<hr><h1>Juggernaut</h1>
+
+<div class="highlight"><pre><span class="k">require_once</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">'DOCUMENT_ROOT'</span><span class="p">]</span><span class="o">.</span><span class="s2">"/path/to/Utilities/Loader.php"</span><span class="p">);</span>
+<span class="nx">\Utilities\Loader</span><span class="o">::</span><span class="na">register</span><span class="p">();</span>
+
+<span class="nv">$jugger</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Juggernaut</span><span class="p">();</span>
+<span class="c1"># Default iterations set to 100,000.</span>
+
+<span class="k">function</span> <span class="nf">test_for_loop</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Do nothing.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nv">$jugger</span><span class="o">-&gt;</span><span class="na">iterate</span><span class="p">(</span><span class="s2">"test_for_loop"</span><span class="p">);</span>
+
+<span class="c1"># key := e63ded35237df6104212beb110810766 </span>
+<span class="c1">#     [ test := iterate          callback := test_for_loop    time := 4995.49ms ] @   100000 iterations</span>
+<span class="c1"># </span>
+<span class="c1"># /**</span>
+<span class="c1">#  *   5. function test_for_loop() {</span>
+<span class="c1">#  *   6.   for ($i = 0; $i &lt; 1000; $i++) {</span>
+<span class="c1">#  *   7.       // Do nothing.</span>
+<span class="c1">#  *   8.   }</span>
+<span class="c1">#  *   9. }</span>
+<span class="c1">#  */</span>
+
+<span class="k">echo</span> <span class="s2">"&lt;pre&gt;"</span><span class="o">.</span><span class="nx">PHP_EOL</span><span class="p">;</span>
+<span class="k">echo</span> <span class="nv">$jugger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">();</span>
+<span class="k">echo</span> <span class="s2">"&lt;/pre&gt;"</span><span class="o">.</span><span class="nx">PHP_EOL</span><span class="p">;</span>
+
+<span class="c1"># Or raw array...</span>
+<span class="nx">print_t</span><span class="p">(</span><span class="nv">$jugger</span><span class="o">-&gt;</span><span class="na">log</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+
+<span class="c1"># Array</span>
+<span class="c1"># (</span>
+<span class="c1">#     [e63ded35237df6104212beb110810766] =&gt; Array</span>
+<span class="c1">#         (</span>
+<span class="c1">#             [name] =&gt; test_for_loop</span>
+<span class="c1">#             [test] =&gt; iterate</span>
+<span class="c1">#             [time] =&gt; 4.9954919815063</span>
+<span class="c1">#             [trys] =&gt; 100000</span>
+<span class="c1">#         )</span>
+<span class="c1"># </span>
+<span class="c1"># )</span>
+</pre></div>
+
+<hr>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Utilities maintained by <a href="https://github.com/bnlucas">bnlucas</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
