@@ -4,7 +4,7 @@
  * namespace Vehicle;
  * use Utilities\AbstractFactory;
  *
- * class CarFactory extends \Utilities\AbstractFactory {
+ * class Factory extends \Utilities\AbstractFactory {
  *	
  * 		public static function __callStatic($factory, $parameters) {
  *			return parent::$factory($parameters);
@@ -46,7 +46,7 @@ echo $car->getColor(); // red [Method in \Vehicle\Motorized]
 require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
 \Utilities\Loader::register();
 
-/** Get list of all loaded class files. **/
+# Get list of all loaded class files.
 foreach (\Utilities\Loader::log() as $filename) {
 	echo $filename."\n";
 }
@@ -68,16 +68,16 @@ function test_for_loop() {
 	}
 }
 
-#key := e63ded35237df6104212beb110810766 
-#    [ test := iterate          callback := test_for_loop    time := 4995.49ms ] @   100000 iterations
-#
-#/**
-# *   5. function test_for_loop() {
-# *   6. 	for ($i = 0; $i < 1000; $i++) {
-# *   7. 		// Do nothing.
-# *   8. 	}
-# *   9. }
-# */
+# key := e63ded35237df6104212beb110810766 
+#     [ test := iterate          callback := test_for_loop    time := 4995.49ms ] @   100000 iterations
+# 
+# /**
+#  *   5. function test_for_loop() {
+#  *   6. 	for ($i = 0; $i < 1000; $i++) {
+#  *   7. 		// Do nothing.
+#  *   8. 	}
+#  *   9. }
+#  */
 
 echo "<pre>".PHP_EOL;
 echo $jugger->log();
@@ -86,17 +86,17 @@ echo "</pre>".PHP_EOL;
 # Or raw array...
 print_t($jugger->log(true));
 
-#Array
-#(
-#    [e63ded35237df6104212beb110810766] => Array
-#        (
-#            [name] => test_for_loop
-#            [test] => iterate
-#            [time] => 4.9954919815063
-#            [trys] => 100000
-#        )
-#
-#)
+# Array
+# (
+#     [e63ded35237df6104212beb110810766] => Array
+#         (
+#             [name] => test_for_loop
+#             [test] => iterate
+#             [time] => 4.9954919815063
+#             [trys] => 100000
+#         )
+# 
+# )
 ```
 
 ------------------------------------------------------------------------
