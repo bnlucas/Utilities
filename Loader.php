@@ -54,7 +54,7 @@ class Loader {
 	 */
 	public static function autoload($class) {
 		$_class = str_replace(__NAMESPACE__."\\", "", __CLASS__);
-		$base = __DIR__;
+		$base = PHP_BASE;
 		if (substr($base, -(strlen($_class))) === $_class) {
 			$base = substr($base, 0, -(strlen($_class)));
 		}

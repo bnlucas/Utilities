@@ -58,6 +58,7 @@ class ErrorHandler {
 	 * @return  throws ErrorException
 	 */
 	public static function handleError($errno, $errstr = null, $errfile = null, $errline = null) {
+		\Utilities\TypeCheck::check("int", "string", "string", "int");
 		if (error_reporting() && $errno) {
 			throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
 		}
@@ -117,6 +118,7 @@ class ErrorHandler {
 	 * @return  void
 	 */
 	public static function register($application, $exceptions = true) {
+		\Utilities\TypeCheck::check("mixed", "bool");
 		set_error_handler(array("\Utilities\ErrorHandler", "handleError"));
 		if ($exceptions) {
 			set_exception_handler(array("\Utilities\ErrorHandler", "handleException"));

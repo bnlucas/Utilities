@@ -57,6 +57,7 @@ class Juggernaut {
 	 * @return  \Utilities\Juggernaut
 	 */
 	public function __construct($iterations = 100000) {
+		\Utilities\TypeCheck::check("int");
 		\Utilities\ErrorHandler::register($this);
 		$this->iterations = $iterations;
 	}
@@ -81,6 +82,7 @@ class Juggernaut {
 	 * @return  void
 	 */
 	public function iterate($callback, $iterations = null) {
+		\Utilities\TypeCheck::check("string", "int");
 		if (is_null($iterations)) {
 			$iterations = $this->iterations;
 		}
@@ -107,6 +109,7 @@ class Juggernaut {
 	 * @return  string|array
 	 */
 	public function log($raw = false) {
+		\Utilities\TypeCheck::check("bool");
 		if ($raw) {
 			return $this->log;
 		}
@@ -127,6 +130,7 @@ class Juggernaut {
 	 * @return  void
 	 */
 	public function single($callback) {
+		\Utilities\TypeCheck::check("string");
 		$start = microtime(true);
 		call_user_func($callback);
 		$stop = microtime(true);
@@ -146,6 +150,7 @@ class Juggernaut {
 	 * @return  string
 	 */
 	public function source($function) {
+		\Utilities\TypeCheck::check("string");
 		$reflect = new ReflectionFunction($function);
 		if (!$reflect->isUserDefined()) {
 			throw new LogicException($function." must be user defined in order to view the source.");
@@ -157,7 +162,7 @@ class Juggernaut {
 			$source .= " * ".sprintf("%3.0d. %s", $i, htmlspecialchars($file[$i]));
 			$i++;
 		} while ($i < $reflect->getEndLine());
-		return $source." */".PHP_EOL.PHP_EOL;
+		return $source." */".str_repeat(PHP_EOL, 3);
 	}
 }
 ?>

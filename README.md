@@ -115,3 +115,13 @@ class MyClass {
 	}
 }
 ```
+
+# TypeCheck
+```php
+function error($errno, $errstr = null, $errfile = null, $errline = null) {
+	\Utilities\TypeCheck("int", "string", "string" "int");
+	if (error_reporting() && $errno) {
+		throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+	}
+}
+```
