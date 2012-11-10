@@ -41,8 +41,6 @@ $car = \Vehicle\Factory::car("Ford", "Mustang", "red");
 echo $car->getColor(); // red [Method in \Vehicle\Motorized]
 ```
 
-------------------------------------------------------------------------
-
 #Loader
 ```php
 require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
@@ -53,8 +51,6 @@ foreach (\Utilities\Loader::log() as $filename) {
 	echo $filename."\n";
 }
 ```
-
-------------------------------------------------------------------------
 
 #Juggernaut
 ```php
@@ -103,4 +99,19 @@ print_t($jugger->log(true));
 # )
 ```
 
-------------------------------------------------------------------------
+# ErrorHandler
+```php
+namespace MyApp;
+use Utilities\ErrorHandler;
+
+class MyClass {
+	
+	public function __construct() {
+		\Utilities\ErrorHandler::register($this);
+	}
+
+	public function __destruct() {
+		\Utilities\ErrorHandler::unregister();
+	}
+}
+```

@@ -57,7 +57,18 @@ class Juggernaut {
 	 * @return  \Utilities\Juggernaut
 	 */
 	public function __construct($iterations = 100000) {
+		\Utilities\ErrorHandler::register($this);
 		$this->iterations = $iterations;
+	}
+
+	/**
+	 * Unregisters \Utilities\ErrorHandler error and exception handling.
+	 *
+	 * @access  public
+	 * @return  void
+	 */
+	public function __destruct() {
+		\Utilities\ErrorHandler::unregister();
 	}
 
 	/**
