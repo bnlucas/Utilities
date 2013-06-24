@@ -41,6 +41,31 @@ $car = \Vehicle\Factory::car("Ford", "Mustang", "red");
 echo $car->getColor(); // red [Method in \Vehicle\Motorized]
 ```
 
+#Cipher
+```php
+require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
+\Utilities\Loader::register();
+
+$cipher = \Utilities\Cipher(MCRYPT_3DES, MCRYPT_MODE_CBC, MCRYPT_RAND);
+
+$cipher->setKey('my secret key')
+
+$encrypted = $cipher->encrypt('my data.');
+$decrypted = $cipher->decrypt($encrypted);
+```
+```php
+# ... loader ...
+
+$cipher = \Utilities\Cipher(MCRYPT_3DES, MCRYPT_MODE_CBC, MCRYPT_RAND);
+
+$data1 = $cipher->encrypt('my data.', 'my secret key 1');
+$data2 = $cipher->encrypt('my data.', 'my secret key 2'); # you can specify different keys.
+
+$data1 = $cipher->decrypt('my data.'); # Does not decrypt, using `my secret key 2` still.
+$data2 = $cipher->decrypt($data2); # Does decrypt.
+$data1 = $cipher->decrypt($data1, 'my secret key 1'); # Does encrypt.
+```
+
 #Loader
 ```php
 require_once($_SERVER['DOCUMENT_ROOT']."/path/to/Utilities/Loader.php");
