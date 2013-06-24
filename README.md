@@ -61,7 +61,7 @@ $cipher = \Utilities\Cipher(MCRYPT_3DES, MCRYPT_MODE_CBC, MCRYPT_RAND);
 $data1 = $cipher->encrypt('my data.', 'my secret key 1');
 $data2 = $cipher->encrypt('my data.', 'my secret key 2'); # you can specify different keys.
 
-$data1 = $cipher->decrypt('my data.'); # Does not decrypt, using `my secret key 2` still.
+$data1 = $cipher->decrypt($data1); # Does not decrypt, using `my secret key 2` still.
 $data2 = $cipher->decrypt($data2); # Does decrypt.
 $data1 = $cipher->decrypt($data1, 'my secret key 1'); # Does encrypt.
 ```
